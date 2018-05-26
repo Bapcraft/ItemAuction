@@ -3,7 +3,6 @@ package io.github.hsyyid.itemauction.events;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Cancellable;
 import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.event.impl.AbstractEvent;
 import org.spongepowered.api.item.inventory.ItemStack;
 
@@ -14,6 +13,7 @@ public class AuctionEvent extends AbstractEvent implements Cancellable
 	private Player sender;
 	private double price;
 	private ItemStack itemStack;
+	private Cause cause;
 
 	public Player getSender()
 	{
@@ -40,15 +40,16 @@ public class AuctionEvent extends AbstractEvent implements Cancellable
 		cancelled = cancel;
 	}
 
-	public AuctionEvent(Player sender, ItemStack itemStack, double price)
+	public AuctionEvent(Player sender, ItemStack itemStack, double price, Cause parentCause)
 	{
 		this.sender = sender;
 		this.itemStack = itemStack;
 		this.price = price;
+		this.cause = Cause.builder().from(parentCause).build(parentCause.getContext());
 	}
 
 	public Cause getCause()
 	{
-		return Cause.of(NamedCause.source(this.sender));
+		return this.cause;
 	}
 }

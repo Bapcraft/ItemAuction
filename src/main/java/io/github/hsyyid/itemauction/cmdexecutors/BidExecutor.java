@@ -10,6 +10,8 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.EventContext;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
@@ -46,7 +48,7 @@ public class BidExecutor implements CommandExecutor
 
 				if (hasEnoughMoney)
 				{
-					Sponge.getEventManager().post(new BidEvent(player, price, auction.get()));
+					Sponge.getEventManager().post(new BidEvent(player, price, auction.get(), Cause.of(EventContext.empty(), auctioneer)));
 					src.sendMessage(Text.of(TextColors.GREEN, "[ItemAuction]: ", TextColors.YELLOW, "Bid sent."));
 				}
 				else

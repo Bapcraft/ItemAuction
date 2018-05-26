@@ -10,6 +10,8 @@ import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.EventContext;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.channel.MessageChannel;
@@ -38,7 +40,7 @@ public class AuctionExecutor implements CommandExecutor
 				if (player.getItemInHand(HandTypes.MAIN_HAND).isPresent())
 				{
 					ItemStack stack = player.getItemInHand(HandTypes.MAIN_HAND).get();
-					Sponge.getEventManager().post(new AuctionEvent(player, stack, price));
+					Sponge.getEventManager().post(new AuctionEvent(player, stack, price, Cause.of(EventContext.empty(), player)));
 					MutableMessageChannel messageChannel = MessageChannel.TO_ALL.asMutable();
 
 					for (UUID uuid : ItemAuction.ignorePlayers)

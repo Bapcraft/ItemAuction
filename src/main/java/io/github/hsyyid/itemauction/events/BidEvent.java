@@ -1,11 +1,11 @@
 package io.github.hsyyid.itemauction.events;
 
-import io.github.hsyyid.itemauction.util.Auction;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Cancellable;
 import org.spongepowered.api.event.cause.Cause;
-import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.event.impl.AbstractEvent;
+
+import io.github.hsyyid.itemauction.util.Auction;
 
 public class BidEvent extends AbstractEvent implements Cancellable
 {
@@ -14,6 +14,7 @@ public class BidEvent extends AbstractEvent implements Cancellable
 	private Player bidder;
 	private double price;
 	private Auction auction;
+	private Cause cause;
 
 	public Player getBidder()
 	{
@@ -40,15 +41,16 @@ public class BidEvent extends AbstractEvent implements Cancellable
 		cancelled = cancel;
 	}
 
-	public BidEvent(Player bidder, double price, Auction auction)
+	public BidEvent(Player bidder, double price, Auction auction, Cause parentCause)
 	{
 		this.bidder = bidder;
 		this.price = price;
 		this.auction = auction;
+		this.cause = Cause.builder().from(parentCause).build(parentCause.getContext());
 	}
 
 	public Cause getCause()
 	{
-		return Cause.of(NamedCause.source(this.bidder));
+		return this.cause;
 	}
 }
