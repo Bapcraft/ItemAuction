@@ -13,7 +13,8 @@ public class ItemAuctionExecutor implements CommandExecutor
 {
 	public CommandResult execute(CommandSource src, CommandContext ctx) throws CommandException
 	{
-		src.sendMessage(Text.of(TextColors.GREEN, "ItemAuction: ", TextColors.GRAY, "Version: ", TextColors.GOLD, Sponge.getPluginManager().getPlugin("io.github.hsyyid.itemauction").get().getVersion()));
+		String version = Sponge.getPluginManager().getPlugin("itemauction").get().getVersion().get();
+		src.sendMessage(Text.of(TextColors.GREEN, "ItemAuction: ", TextColors.GRAY, "Version: ", TextColors.GOLD, version));
 		return CommandResult.success();
 	}
 }
